@@ -78,30 +78,49 @@ CREATE TABLE acl_entry (
  */
 
 
+//@EnableWebSecurity
+//public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//
+//    @Autowired
+//    DataSource dataSource;
+//
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .authorizeRequests()
+////                .antMatchers("/css/**", "/").permitAll()
+//                .antMatchers("/user/**", "/user", "/").hasRole("USER")
+//                .and()
+//                .formLogin();
+//    }
+//
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .inMemoryAuthentication()
+//                    .withUser("user").password("{noop}user").roles("USER")
+//                .and()
+//                    .withUser("admin").password("{noop}admin").roles("USER", "supervisor");
+////        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(NoOpPasswordEncoder.getInstance());
+//    }
+//
+//}
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    DataSource dataSource;
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-//                .antMatchers("/css/**", "/").permitAll()
-                .antMatchers("/user/**", "/user", "/").hasRole("USER")
-                .and()
-                .formLogin();
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().withUser("user")
+                .password("user").roles("USER");
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                    .withUser("user").password("{noop}user").roles("USER")
-                .and()
-                    .withUser("admin").password("{noop}admin").roles("USER", "supervisor");
-//        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(NoOpPasswordEncoder.getInstance());
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.antMatcher("/**").authorizeRequests().anyRequest().hasRole("USER")
+                .and().formLogin().loginPage("/login")
+                .failureUrl("/login.jsp?error=1").loginProcessingUrl("/login")
+                .permitAll().and().logout()
+                .logoutSuccessUrl("/listEmployees");
     }
-
 }
