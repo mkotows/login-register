@@ -5,7 +5,7 @@
 <head>
     <title>Employees Login</title>
 </head>
-
+<jsp:include page="menu.jsp" />
 <body>
 
 <h1><strong>Employees Login</strong></h1>

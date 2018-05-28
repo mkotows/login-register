@@ -78,6 +78,8 @@ CREATE TABLE acl_entry (
  */
 
 
+
+
 //@EnableWebSecurity
 //public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //
@@ -105,22 +107,28 @@ CREATE TABLE acl_entry (
 //    }
 //
 //}
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user")
-                .password("user").roles("USER");
-    }
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http.antMatcher("/**").authorizeRequests().anyRequest().hasRole("USER")
-                .and().formLogin().loginPage("/login")
-                .failureUrl("/login.jsp?error=1").loginProcessingUrl("/login")
-                .permitAll().and().logout()
-                .logoutSuccessUrl("/listEmployees");
-    }
-}
+
+
+
+//@EnableWebSecurity
+//public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//
+//
+//    @Override
+//    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication().withUser("user")
+//                .password("user").roles("USER");
+//    }
+//
+//    @Override
+//    public void configure(HttpSecurity http) throws Exception {
+//        http.antMatcher("/**").authorizeRequests().anyRequest().hasRole("USER")
+//                .and().formLogin().loginPage("/login")
+//                .failureUrl("/login.jsp?error=1").loginProcessingUrl("/login")
+//                .permitAll().and().logout()
+//                .logoutSuccessUrl("/listEmployees");
+//    }
+//}

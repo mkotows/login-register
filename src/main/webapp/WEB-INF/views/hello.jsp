@@ -10,9 +10,9 @@
 <head>
     <title>Title</title>
 </head>
+<jsp:include page="menu.jsp" />
 <body>
-HELLLO
-<br>
-HI
+HELLO
+
 </body>
 </html>

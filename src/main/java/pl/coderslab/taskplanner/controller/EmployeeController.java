@@ -16,20 +16,12 @@ import pl.coderslab.taskplanner.repository.EmployeeRepository;
 public class EmployeeController {
 
 	@Autowired
-	private EmployeeRepository employeeData;
-
-//	@RequestMapping(value = "/addNewEmployee.html", method = RequestMethod.POST)
-//	public String newEmployee(Employee employee) {
-//
-//		employeeData.save(employee);
-//		return ("redirect:/listEmployees");
-//
-//	}
+	private EmployeeRepository employeeRepository;
 
 	@PostMapping("/addNewEmployee")
 	public String newEmployee(Employee employee) {
 
-		employeeData.save(employee);
+		employeeRepository.save(employee);
 		return ("redirect:/listEmployees");
 	}
 
@@ -41,9 +33,9 @@ public class EmployeeController {
 
 	}
 
-	@RequestMapping(value = "/listEmployees", method = RequestMethod.GET)
+	@RequestMapping(value = "/getEmployees", method = RequestMethod.GET)
 	public ModelAndView employees() {
-		List<Employee> allEmployees = employeeData.findAll();
+		List<Employee> allEmployees = employeeRepository.findAll();
 		return new ModelAndView("allEmployees", "employees", allEmployees);
 
 	}
