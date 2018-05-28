@@ -1,21 +1,48 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html>
+<c:set var="contextPath" value=""/>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Employees Login</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Log in with your credentials</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
-<jsp:include page="menu.jsp" />
+
 <body>
 
-<h1><strong>Employees Login</strong></h1>
+<div class="container">
 
-<c:url value="/login" var="login"/>
+    <form method="POST" action="/login" class="form-signin">
+        <h2 class="form-heading">Log in</h2>
 
-<form:form action="" method="post">
-    <label>Username:</label> <input type="text" name="username" />
-    <label>Password:</label> <input type="text" name="password" />
-    <input type="submit"/>
-</form:form>
+        <div class="form-group ">
+            <span></span>
+            <input name="username" type="text" class="form-control" placeholder="Username"
+                   autofocus="true"/>
+            <input name="password" type="password" class="form-control" placeholder="Password"/>
+            <span></span>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+        </div>
+
+    </form>
+    <span class=" alert-danger"> ${errorMsg} </span>
+    <span class=" alert-success"> ${msg} </span>
+</div>
+<!-- /container -->
+<%--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>--%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script></body>
+
 </body>
 </html>
