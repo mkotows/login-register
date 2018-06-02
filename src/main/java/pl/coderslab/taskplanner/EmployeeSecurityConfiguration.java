@@ -20,16 +20,16 @@ public class EmployeeSecurityConfiguration extends WebSecurityConfigurerAdapter 
     @Autowired
     DataSource dataSource;
 
-//   // Enable jdbc authentication
-//    @Autowired
-//    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.jdbcAuthentication().dataSource(dataSource);
-//    }
-//
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/resources/**");
-//    }
+   // Enable jdbc authentication
+    @Autowired
+    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication().dataSource(dataSource);
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/resources/**");
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -43,24 +43,24 @@ public class EmployeeSecurityConfiguration extends WebSecurityConfigurerAdapter 
 
         http.csrf().disable();
     }
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .inMemoryAuthentication()
-//                .withUser("user").password("{noop}user").roles("USER")
-//                .and()
-//                .withUser("admin").password("{noop}admin").roles("USER", "supervisor");
-//                .and()
-//                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
-
-        //basic
-//        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(NoOpPasswordEncoder.getInstance());
-
-        //encoder
-
-        auth.jdbcAuthentication().dataSource(dataSource);
-
-    }
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+////        auth
+////                .inMemoryAuthentication()
+////                .withUser("user").password("{noop}user").roles("USER")
+////                .and()
+////                .withUser("admin").password("{noop}admin").roles("USER", "supervisor");
+////                .and()
+////                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
+//
+//        //basic
+////        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(NoOpPasswordEncoder.getInstance());
+//
+//        //encoder
+//
+//        auth.jdbcAuthentication().dataSource(dataSource);
+//
+//    }
 
 
 //    @Autowired
