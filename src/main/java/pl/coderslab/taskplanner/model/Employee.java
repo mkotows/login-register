@@ -7,7 +7,8 @@ import javax.persistence.Id;
 
 @Entity
 public class Employee {
-	@GeneratedValue(strategy = GenerationType.AUTO)
+
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private long id;
 
@@ -19,6 +20,14 @@ public class Employee {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getDept() {

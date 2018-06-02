@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,14 +19,7 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
-	@PostMapping("/addNewEmployee")
-	public String newEmployee(Employee employee) {
-
-		employeeRepository.save(employee);
-		return ("redirect:/listEmployees");
-	}
-
-	@RequestMapping(value = "/addNewEmployee", method = RequestMethod.GET)
+	@GetMapping("/addNewEmployee")
 	public ModelAndView addNewEmployee() {
 
 		Employee emp = new Employee();
@@ -33,7 +27,14 @@ public class EmployeeController {
 
 	}
 
-	@RequestMapping(value = "/getEmployees", method = RequestMethod.GET)
+	@PostMapping("/addNewEmployee")
+	public String newEmployee(Employee employee) {
+
+		employeeRepository.save(employee);
+		return ("redirect:/getEmployees");
+	}
+
+	@GetMapping("/getEmployees")
 	public ModelAndView employees() {
 		List<Employee> allEmployees = employeeRepository.findAll();
 		return new ModelAndView("allEmployees", "employees", allEmployees);
