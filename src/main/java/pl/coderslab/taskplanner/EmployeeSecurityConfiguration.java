@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import javax.sql.DataSource;
 
@@ -21,9 +22,16 @@ public class EmployeeSecurityConfiguration extends WebSecurityConfigurerAdapter 
     DataSource dataSource;
 
    // Enable jdbc authentication
-    @Autowired
-    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource);
+//    @Autowired
+//    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.jdbcAuthentication().dataSource(dataSource);
+//    }
+
+    @Bean
+    public JdbcUserDetailsManager jdbcUserDetailsManager() throws Exception {
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
+        jdbcUserDetailsManager.setDataSource(dataSource);
+        return jdbcUserDetailsManager;
     }
 
     @Override
@@ -33,7 +41,7 @@ public class EmployeeSecurityConfiguration extends WebSecurityConfigurerAdapter 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/").permitAll()
+        http.authorizeRequests().antMatchers("/", "/register").permitAll()
                 .antMatchers("/welcome").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/listEmployees").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/addNewEmployee").hasAnyRole("ADMIN")

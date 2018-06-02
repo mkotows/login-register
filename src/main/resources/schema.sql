@@ -1,12 +1,12 @@
-DROP TABLE IF EXISTS employee;
+-- DROP TABLE IF EXISTS employee;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS authorities;
 
 
-CREATE TABLE employee (
-  id VARCHAR(10) NOT NULL,
-  name VARCHAR(100) NOT NULL
-);
+-- CREATE TABLE employee (
+--   id VARCHAR(10) NOT NULL,
+--   name VARCHAR(100) NOT NULL
+-- );
 
 create table users (
     username varchar(50) not null primary key,

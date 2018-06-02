@@ -1,15 +1,18 @@
 package pl.coderslab.taskplanner.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.coderslab.taskplanner.model.Employee;
+import pl.coderslab.taskplanner.model.UserRegistration;
 import pl.coderslab.taskplanner.repository.EmployeeRepository;
 
 
@@ -18,6 +21,9 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
+
+	@Autowired
+	JdbcUserDetailsManager jdbcUserDetailsManager;
 
 	@GetMapping("/addNewEmployee")
 	public ModelAndView addNewEmployee() {
@@ -38,7 +44,23 @@ public class EmployeeController {
 	public ModelAndView employees() {
 		List<Employee> allEmployees = employeeRepository.findAll();
 		return new ModelAndView("allEmployees", "employees", allEmployees);
+	}
 
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public ModelAndView register() {
+		return new ModelAndView("registration", "user", new UserRegistration());
+	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public ModelAndView processRegister(@ModelAttribute("user") UserRegistration userRegistrationObject) {
+
+		// authorities to be granted
+		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+
+		User user = new User(userRegistrationObject.getUsername(), userRegistrationObject.getPassword(), authorities);
+		jdbcUserDetailsManager.createUser(user);
+		return new ModelAndView("redirect:/welcome");
 	}
 
 }
