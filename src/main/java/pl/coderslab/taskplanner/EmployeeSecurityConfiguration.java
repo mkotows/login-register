@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import pl.coderslab.taskplanner.handler.EmployeeAuthenticationSuccessHandler;
 
 import javax.sql.DataSource;
 
@@ -20,6 +21,8 @@ public class EmployeeSecurityConfiguration extends WebSecurityConfigurerAdapter 
 
     @Autowired
     DataSource dataSource;
+    @Autowired
+    private EmployeeAuthenticationSuccessHandler successHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -56,7 +59,10 @@ public class EmployeeSecurityConfiguration extends WebSecurityConfigurerAdapter 
                 .antMatchers("/listEmployees").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/addNewEmployee").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").permitAll()
+                .and().formLogin()
+                // line under is added to redirect logged user to proper place and this place depends from role has logged user
+                .successHandler(successHandler)
+                .loginPage("/login").permitAll()
                 .and().logout().permitAll();
 
         http.csrf().disable();
