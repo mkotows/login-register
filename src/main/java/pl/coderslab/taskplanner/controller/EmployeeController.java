@@ -56,7 +56,7 @@ public class EmployeeController {
 
 		// authorities to be granted
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
 		User user = new User(userRegistrationObject.getUsername(), userRegistrationObject.getPassword(), authorities);
 		jdbcUserDetailsManager.createUser(user);
