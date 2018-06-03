@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +25,9 @@ public class EmployeeController {
 
 	@Autowired
 	JdbcUserDetailsManager jdbcUserDetailsManager;
+
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@GetMapping("/addNewEmployee")
 	public ModelAndView addNewEmployee() {
@@ -58,7 +62,9 @@ public class EmployeeController {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-		User user = new User(userRegistrationObject.getUsername(), userRegistrationObject.getPassword(), authorities);
+		String encodedPassword = bCryptPasswordEncoder.encode(userRegistrationObject.getPassword());
+
+		User user = new User(userRegistrationObject.getUsername(), encodedPassword, authorities);
 		jdbcUserDetailsManager.createUser(user);
 		return new ModelAndView("redirect:/welcome");
 	}

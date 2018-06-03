@@ -22,8 +22,7 @@
 <body>
 
 <div class="container">
-    <a href="/register">Register New User</a>
-    <br>
+
     <form method="POST" action="/login" class="form-signin">
         <h2 class="form-heading">Log in</h2>
 
@@ -37,7 +36,9 @@
         </div>
 
     </form>
-
+    <br>
+    <a href="/register">Register New User</a>
+    <br><br>
     <span class=" alert-danger"> ${errorMsg} </span>
     <span class=" alert-success"> ${msg} </span>
 </div>
