@@ -63,7 +63,8 @@ public class EmployeeSecurityConfiguration extends WebSecurityConfigurerAdapter 
                 // line under is added to redirect logged user to proper place and this place depends from role has logged user
                 .successHandler(successHandler)
                 .loginPage("/login").permitAll()
-                .and().logout().permitAll();
+                .and().logout().permitAll()
+                .and().exceptionHandling().accessDeniedPage("/accessDenied.jsp");
 
         http.csrf().disable();
     }
